@@ -12,7 +12,38 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+/* laravel uses classes */
+// Route::get('/home', function () {
+//     return view('home');
+// });
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+
+// Route::get('/about', function () {
+//     return view('about');
+// });
+
+// Route::get('/cars', function () {
+//     return view('cars');
+// })->name('cars');
+
+
 
 Route::get('/', function () {
+    return view('home');
+})->name('home');
+
+Route::get('welcome', function () {
     return view('welcome');
-});
+})->name('welcome');
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+Route::get('/cars', function () {
+    return view('cars');
+})->name('cars');
