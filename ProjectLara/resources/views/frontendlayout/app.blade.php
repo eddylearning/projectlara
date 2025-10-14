@@ -93,7 +93,7 @@
     /* ===== Hero ===== */
    .hero {
   background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2)),
-              url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+              url('https://unsplash.com/photos/red-chevrolet-camaro-on-road-during-daytime-SWt1dHle1eA') center/cover no-repeat;
   color: #fff;
   text-align: center;
   padding: 5rem 1rem;

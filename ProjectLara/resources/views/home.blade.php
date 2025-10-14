@@ -1,18 +1,6 @@
- <!-- @extends('frontendlayout.app')
 
-@section('title', 'Home')
-
-@section('content')
-<section class="container">
-  <h2>Welcome to CarSelect</h2>
-  <p>This is your home dashboard or landing screen for users.</p>
-</section>
-@endsection -->
-
-/*the commented out code above is being displayed on browser */
+<!-- the/* commented out code above is being displayed on browser */ -->
 @extends('frontendlayout.app')
-
-@section('title', 'Home')
 
 @section('content')
 <section class="features">
