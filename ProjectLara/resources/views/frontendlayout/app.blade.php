@@ -291,7 +291,7 @@
 <body>
 
   {{-- Include Header Partial --}}
-  @include('partials.header')
+  @include('PartialsHF.header')
 
   {{-- Main content wrapped in <main> for flexbox layout --}}
   <main>
@@ -299,7 +299,7 @@
   </main>
 
   {{-- Include Footer Partial --}}
-  @include('partials.footer')
+  @include('PartialsHF.footer')
 
 </body>
 </html>
