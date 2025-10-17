@@ -22,6 +22,11 @@
         <h4>2020 BMW 3 Series</h4>
         <p>$30,990 · 30,000 miles</p>
       </div>
+      <div class="car-card">
+        <img src="https://unsplash.com/photos/red-chevrolet-camaro-on-road-during-daytime-SWt1dHle1eA" alt="red chevi">
+        <h4>1960 chevi camero</h4>
+        <p>$50,000 . 65,000 miles</p>
+      </div>
     </div>
   </div>
 </section>
