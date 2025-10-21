@@ -23,7 +23,7 @@
         <p>$30,990 · 30,000 miles</p>
       </div>
       <div class="car-card">
-        <img src="https://unsplash.com/photos/red-chevrolet-camaro-on-road-during-daytime-SWt1dHle1eA" alt="red chevi">
+        <img src="https://images.unsplash.com/photo-1618843473927-0cb7b9efbfa3?auto=format&fit=crop&w=300&q=80" alt="red chevy camaro">
         <h4>1960 chevi camero</h4>
         <p>$50,000 . 65,000 miles</p>
       </div>

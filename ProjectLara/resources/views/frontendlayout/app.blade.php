@@ -201,12 +201,20 @@
 
     .car-card {
       background: white;
-      border-radius: 8px;
+      border-radius: 20px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       overflow: hidden;
       transition: transform 0.3s ease;
-      max-width: 300px;
+      
+      width: 300px;
     }
+    
+    .car-card img {
+     width: 100%;
+     height: 180px;
+     object-fit: cover;
+    }
+
 
     .car-card:hover {
       transform: translateY(-5px);
