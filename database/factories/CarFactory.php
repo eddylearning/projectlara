@@ -17,7 +17,10 @@ class CarFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->year . ' ' . $this->faker->randomElement(['Toyota Corolla', 'Honda Civic', 'BMW 3 Series', 'Ford Mustang']),
+            'price' => $this->faker->numberBetween(10000, 60000),
+            'mileage' => $this->faker->numberBetween(5000, 120000),
+            'image_url' => 'https://via.placeholder.com/300x180?text=' . urlencode($this->faker->randomElement(['Toyota', 'Honda', 'BMW', 'Ford'])),
         ];
     }
 }

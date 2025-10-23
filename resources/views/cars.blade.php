@@ -1,4 +1,4 @@
-@extends('frontendlayout.app')
+{{-- @extends('frontendlayout.app')
 
 @section('title', 'Browse Cars')
 
@@ -28,6 +28,30 @@
         <p>$50,000 . 65,000 miles</p>
       </div>
     </div>
+  </div>
+</section>
+@endsection --}}
+
+@extends('frontendlayout.app')
+
+@section('title', 'Browse Cars')
+
+@section('content')
+<section class="cars" id="cars">
+  <div class="container">
+    <h3>Our Car Listings</h3>
+    <div class="car-grid">
+      @foreach($cars as $car)
+        <div class="car-card">
+          <img src="{{ $car->image_url }}" alt="{{ $car->title }}">
+          <h4>{{ $car->title }}</h4>
+          <p>${{ number_format($car->price, 2) }} · {{ number_format($car->mileage) }} miles</p>
+        </div>
+      @endforeach
+    </div>
+
+    {{-- ✅ Clean pagination --}}
+    {{ $cars->links('pagination::tailwind') }}
   </div>
 </section>
 @endsection

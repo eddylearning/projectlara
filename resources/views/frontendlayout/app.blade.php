@@ -255,6 +255,14 @@
     .cta-button:hover {
       background: #e64a19;
     }
+        
+       /*pagination for cars*/
+    /* .pagination {
+     display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    } */
+
 
     /* ===== Footer ===== */
     .footer {
