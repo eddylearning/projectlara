@@ -49,9 +49,10 @@
         </div>
       @endforeach
     </div>
-
-    {{-- ✅ Clean pagination --}}
-    {{ $cars->links('pagination::tailwind') }}
-  </div>
+     
+  {{-- ✅ Pagination Links --}}
+    <div class="mt-6 flex justify-center">
+      {{ $cars->links('pagination::tailwind') }}
+    </div>
 </section>
 @endsection
