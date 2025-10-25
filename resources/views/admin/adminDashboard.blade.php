@@ -1,4 +1,4 @@
-@extends('admin.layout')
+{{-- @extends('admin.AdminLayout.layout')
 
 @section('title', 'Dashboard')
 
@@ -61,4 +61,16 @@
     </tbody>
   </table>
 </div>
+@endsection --}}
+
+@extends('admin.AdminLayout.layout')
+
+
+@section('title', 'Dashboard')
+
+@section('content')
+    <div class="container">
+        <h1>Welcome to the Admin Dashboard 🎉</h1>
+        <p>This is your admin overview page.</p>
+    </div>
 @endsection

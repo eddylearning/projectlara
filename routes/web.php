@@ -8,6 +8,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\AdminCarController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,17 @@ Route::post('/contact', [ContactController::class, 'submit'])->name('contact.sub
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 
-Route::prefix('admin')->name('admin')->group(function (){
-    Route::resource('cars', [AdminCarController::class, 'index'])->name('dashboard');
+           //admin routes
+// Route::prefix('admin')->name('admin.')->group(function (){
+//     Route::resource('cars', AdminCarController::class)->name('dashboard');
+// });
+// Route::prefix('admin')->name('admin.')->group(function () {
+//     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+// });
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Admin dashboard
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+    // Admin car CRUD routes
+    Route::resource('cars', AdminCarController::class);
 });
