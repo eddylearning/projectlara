@@ -1,4 +1,4 @@
-@extends('admin.FrontendLayout')
+@extends('admin.AdminLayout.layout')
 
 @section('title', 'Add Car')
 

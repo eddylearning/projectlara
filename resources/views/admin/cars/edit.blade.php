@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('admin.Adminlayout.layout')
 
 @section('title', 'Edit Car')
 
@@ -29,6 +29,6 @@
     <input name="image_url" value="{{ $car->image_url }}" class="form-control">
   </div>
 
-  <button class="btn btn-primary">Update</button>
+  <button type="submit" class="btn btn-primary">Update</button>
 </form>
 @endsection
