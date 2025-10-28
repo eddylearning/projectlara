@@ -55,7 +55,7 @@ Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 Route::prefix('admin')->name('admin.')->group(function () {
     // Admin dashboard
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
-
     // Admin car CRUD routes
     Route::resource('cars', AdminCarController::class);
+    Route::resource('reports', AdminReportController::class);
 });

@@ -66,7 +66,7 @@
     <h4>Admin Panel</h4>
     <a href="{{ route('admin.dashboard') }}" class="{{ request()->is('admin') ? 'active' : '' }}">🏠 Dashboard</a>
     <a href="{{ route('admin.cars.index') }}" class="{{ request()->is('admin/cars*') ? 'active' : '' }}">🚗 Cars</a>
-    <a href="#" class="{{ request()->is('admin/reports*') ? 'active' : '' }}">📊 Reports</a>
+    <a href="{{route('admin.reports.index')}}" class="{{ request()->is('admin/reports*') ? 'active' : '' }}">📊 Reports</a>
     <a href="#" class="{{ request()->is('admin/users*') ? 'active' : '' }}">👤 Users</a>
     <a href="#" class="{{ request()->is('admin/settings*') ? 'active' : '' }}">⚙️ Settings</a>
     <a href="{{ route('logout') }}" 
