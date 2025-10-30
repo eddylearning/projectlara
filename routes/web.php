@@ -53,7 +53,7 @@ Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 // Route::prefix('admin')->name('admin.')->group(function () {
 //     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
 // });
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     // Admin dashboard
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     // Admin car CRUD routes
