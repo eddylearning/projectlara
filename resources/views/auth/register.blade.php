@@ -1,4 +1,4 @@
-@extends('frontendlayout.app')
+{{-- @extends('frontendlayout.app') --}}
 
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">

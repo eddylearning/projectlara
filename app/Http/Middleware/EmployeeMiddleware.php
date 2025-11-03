@@ -15,6 +15,9 @@ class EmployeeMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (!auth()->check()){
+            return redirect()->route('login');
+        }
         if (auth()->check() && auth()->user()->role === 'employee'){
         return $next($request);
         }

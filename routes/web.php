@@ -60,3 +60,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('cars', AdminCarController::class);
     Route::resource('reports', AdminReportController::class);
 });
+
+Route::middleware(['auth', 'employee'])->prefix('employee')->name('employee.')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('employee.dashboard');
+    })->name('dashboard');
+});
+
+Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('user.dashboard');
+    })->name('dashboard');
+});
