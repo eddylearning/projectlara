@@ -14,10 +14,8 @@ class Kernel extends HttpKernel
      * @var array<int, class-string|string>
      */
     protected $middleware = [
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        'employee' => \App\Http\Middleware\EmployeeMiddleware::class,
-        'user' => \App\Http\Middleware\UserMiddleware::class,
 
+        //adding middleware here enssures they are called globaly
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
@@ -25,6 +23,13 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+    ];
+
+    //adding the middlware here ensures they are not called globaly
+    protected $routeMiddlewar =[
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'employee' => \App\Http\Middleware\EmployeeMiddleware::class,
+        'user' => \App\Http\Middleware\UserMiddleware::class,
     ];
 
     /**
