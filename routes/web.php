@@ -9,7 +9,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\AdminCarController;
 use App\Http\Controllers\Admin\AdminReportController;
+use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Employee\EmployeeDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,13 +64,18 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 });
 
 Route::middleware(['auth', 'employee'])->prefix('employee')->name('employee.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('employee.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [EmployeeDashboardController::class, 'index'])->name('dashboard');
+    // Admin car CRUD routes
+    Route::resource('cars', AdminCarController::class);
+    Route::resource('reports', AdminReportController::class);
+    Route::resource('booking',BookingCOntroller::class);
 });
 
 Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('user.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+    // Admin car CRUD routes
+    Route::resource('cars', AdminCarController::class);
+    Route::resource('reports', AdminReportController::class);
+    Route::resource('booking',BookingCOntroller::class);
+
 });

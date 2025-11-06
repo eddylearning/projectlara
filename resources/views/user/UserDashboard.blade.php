@@ -19,7 +19,7 @@
       <div class="card text-white bg-primary mb-3">
         <div class="card-body">
           <h5>My Cars</h5>
-          <h3>{{ $myCars }}</h3>
+          <h3>{{ $Cars }}</h3>
         </div>
       </div>
     </div>

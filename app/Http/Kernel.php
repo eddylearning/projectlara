@@ -26,7 +26,7 @@ class Kernel extends HttpKernel
     ];
 
     //adding the middlware here ensures they are not called globaly
-    protected $routeMiddlewar =[
+    protected $routeMiddleware =[
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'employee' => \App\Http\Middleware\EmployeeMiddleware::class,
         'user' => \App\Http\Middleware\UserMiddleware::class,
