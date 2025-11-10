@@ -11,10 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bookings', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+     Schema::create('bookings', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+        $table->foreignId('car_id')->constrained()->cascadeOnDelete();
+        $table->enum('status', ['pending', 'approved', 'completed', 'cancelled'])->default('pending');
+        $table->date('start_date');
+        $table->date('end_date');
+        $table->timestamps();
+});
+
     }
 
     /**

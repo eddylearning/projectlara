@@ -10,12 +10,12 @@
 
 @extends('employee.EmployeeLayout.layout')
 
-@section('title', 'Dashboard')
+@section('title', 'Employee Dashboard')
 
 @section('content')
 <div class="container-fluid">
   <div class="row g-4">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card text-white bg-primary mb-3">
         <div class="card-body">
           <h5>Total Bookings</h5>
@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card text-white bg-success mb-3">
         <div class="card-body">
           <h5>Active Trips</h5>
@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card text-white bg-warning mb-3">
         <div class="card-body">
           <h5>Completed Trips</h5>
@@ -51,7 +51,7 @@
         <th>User</th>
         <th>Car</th>
         <th>Status</th>
-        <th>Date</th>
+        <th>Created</th>
       </tr>
     </thead>
     <tbody>
@@ -60,7 +60,16 @@
         <td>{{ $booking->id }}</td>
         <td>{{ $booking->user->name ?? 'N/A' }}</td>
         <td>{{ $booking->car->title ?? 'N/A' }}</td>
-        <td>{{ ucfirst($booking->status) }}</td>
+        <td>
+          <span class="badge 
+              @if($booking->status == 'approved') bg-success 
+              @elseif($booking->status == 'pending') bg-warning 
+              @elseif($booking->status == 'cancelled') bg-danger 
+              @else bg-secondary 
+              @endif">
+            {{ ucfirst($booking->status) }}
+          </span>
+        </td>
         <td>{{ $booking->created_at->format('M d, Y') }}</td>
       </tr>
       @empty

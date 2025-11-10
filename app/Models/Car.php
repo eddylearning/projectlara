@@ -16,4 +16,11 @@ class Car extends Model
         'image_url',
 
     ];
+
+    // Car.php
+public function bookings()
+{
+    return $this->hasMany(Booking::class);
+}
+
 }

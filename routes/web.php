@@ -8,9 +8,11 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\AdminCarController;
+use App\Http\Controllers\User\UserBookingController;
 use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Employee\EmployeeBookingController;
 use App\Http\Controllers\Employee\EmployeeDashboardController;
 
 /*
@@ -68,7 +70,11 @@ Route::middleware(['auth', 'employee'])->prefix('employee')->name('employee.')->
     // Admin car CRUD routes
     Route::resource('cars', AdminCarController::class);
     Route::resource('reports', AdminReportController::class);
-    Route::resource('booking',BookingCOntroller::class);
+    Route::resource('booking',EmployeeBookingController::class);
+    Route::get('bookings', [EmployeeBookingController::class, 'index'])->name('bookings.index');
+    Route::get('bookings/{booking}', [EmployeeBookingController::class, 'show'])->name('bookings.show');
+    Route::patch('bookings/{booking}', [EmployeeBookingController::class, 'update'])->name('bookings.update');
+
 });
 
 Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(function () {
@@ -76,6 +82,11 @@ Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(functi
     // Admin car CRUD routes
     Route::resource('cars', AdminCarController::class);
     Route::resource('reports', AdminReportController::class);
-    Route::resource('booking',BookingCOntroller::class);
+    Route::resource('booking',UserBookingController::class);
+    Route::get('bookings', [UserBookingController::class, 'index'])->name('bookings.index');
+    Route::get('bookings/create', [UserBookingController::class, 'create'])->name('bookings.create');
+    Route::post('bookings', [UserBookingController::class, 'store'])->name('bookings.store');
+    Route::delete('bookings/{booking}', [UserBookingController::class, 'destroy'])->name('bookings.destroy');
+    Route::get('bookings/{booking}', [UserBookingController::class, 'show'])->name('bookings.show');
 
 });
