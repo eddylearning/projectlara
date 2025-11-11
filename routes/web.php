@@ -7,6 +7,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\User\UserCarController;
 use App\Http\Controllers\Admin\AdminCarController;
 use App\Http\Controllers\User\UserBookingController;
 use App\Http\Controllers\Admin\AdminReportController;
@@ -79,9 +80,8 @@ Route::middleware(['auth', 'employee'])->prefix('employee')->name('employee.')->
 
 Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-    // Admin car CRUD routes
-    Route::resource('cars', AdminCarController::class);
-    Route::resource('reports', AdminReportController::class);
+    // user car CRUD routes
+    Route::resource('cars', UserCarController::class);
     Route::resource('booking',UserBookingController::class);
     Route::get('bookings', [UserBookingController::class, 'index'])->name('bookings.index');
     Route::get('bookings/create', [UserBookingController::class, 'create'])->name('bookings.create');
