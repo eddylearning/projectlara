@@ -18,9 +18,14 @@ class UserMiddleware
         if (!auth()->check()){
             return redirect()->route('login');
         }
-        if (auth()->check() && auth()->user()->role === 'user'){
-        return $next($request);
+        // if (auth()->check() && auth()->user()->role === 'user'){
+        // return $next($request);
+        // }
+
+         if (!auth()->check() || !auth()->user()->is_admin) {
+            abort(403, 'Unauthorized access.');
         }
-        abort(403, 'unauthorized access');
+        return $next($request);
+        // abort(403, 'unauthorized access');
     }
 }

@@ -58,29 +58,33 @@ Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 // Route::prefix('admin')->name('admin.')->group(function () {
 //     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
 // });
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
+
     // Admin dashboard
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
-    // Admin car CRUD routes
-    Route::resource('cars', AdminCarController::class);
-    Route::resource('reports', AdminReportController::class);
-});
 
-Route::middleware(['auth', 'employee'])->prefix('employee')->name('employee.')->group(function () {
-    Route::get('/dashboard', [EmployeeDashboardController::class, 'index'])->name('dashboard');
     // Admin car CRUD routes
     Route::resource('cars', AdminCarController::class);
+
+    // Admin report CRUD routes
     Route::resource('reports', AdminReportController::class);
-    Route::resource('booking',EmployeeBookingController::class);
-    Route::get('bookings', [EmployeeBookingController::class, 'index'])->name('bookings.index');
-    Route::get('bookings/{booking}', [EmployeeBookingController::class, 'show'])->name('bookings.show');
-    Route::patch('bookings/{booking}', [EmployeeBookingController::class, 'update'])->name('bookings.update');
 
 });
 
-Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(function () {
-    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-    // user car CRUD routes
+Route::middleware(['auth', 'is_employee'])->prefix('employee')->name('employee.')->group(function () {
+    Route::get('/', [EmployeeDashboardController::class, 'index'])->name('dashboard');
+
+    // Employee bookings CRUD routes
+    Route::resource('bookings', EmployeeBookingController::class);
+
+    // Employee cars CRUD routes
+    Route::resource('cars', EmployeeCarController::class);
+
+});
+
+Route::middleware(['auth', 'is_user'])->prefix('user')->name('user.')->group(function () {
+    Route::get('/', [UserDashboardController::class, 'index'])->name('dashboard');
+ // user car CRUD routes
     Route::resource('cars', UserCarController::class);
     Route::resource('booking',UserBookingController::class);
     Route::get('bookings', [UserBookingController::class, 'index'])->name('bookings.index');

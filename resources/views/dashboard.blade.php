@@ -1,4 +1,4 @@
-@extends('admin.AdminLayout.layout')
+
 
 <x-app-layout>
     <x-slot name="header">

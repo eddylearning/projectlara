@@ -26,11 +26,12 @@ class Kernel extends HttpKernel
     ];
 
     //adding the middlware here ensures they are not called globaly
-    protected $routeMiddleware =[
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        'employee' => \App\Http\Middleware\EmployeeMiddleware::class,
-        'user' => \App\Http\Middleware\UserMiddleware::class,
-    ];
+ protected $routeMiddleware = [
+    'is_admin' => \App\Http\Middleware\AdminMiddleware::class,
+    'is_employee' => \App\Http\Middleware\EmployeeMiddleware::class,
+    'is_user' => \App\Http\Middleware\UserMiddleware::class,
+];
+
 
     /**
      * The application's route middleware groups.

@@ -1,14 +1,4 @@
-{{-- @extends('admin.AdminLayout.layout')
-
-@section('content')
-<div class="container">
-    <h1>Employee Dashboard</h1>
-    <p>Welcome, {{ auth()->user()->name }}!</p>
-</div>
-@endsection --}}
-
-
-@extends('employee.EmployeeLayout.layout')
+@extends('employee.EmployeeLayout.Layout')
 
 @section('title', 'Employee Dashboard')
 

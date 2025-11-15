@@ -32,9 +32,10 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'. User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['nullable', 'string', 'in:user,employee'],        ]);
+            'role' => ['required', 'string', 'in:user,employee'],        
+        ]);
 
         $user = User::create([
             'name' => $request->name,
@@ -48,15 +49,18 @@ class RegisteredUserController extends Controller
         Auth::login($user);
         
         //redirect based on role
-        if ($user->role === 'admin'){
-            return redirect ()->route(admin.dashboard);
-        }elseif ($user->role ==='employee'){
-            return redirect ()->route(employee.dashboard);
+        // is_admin should not be allowed in register form
+        // if ($user->role === 'admin'){
+        //     return redirect ()->route('admin.dashboard');
+        // }
+        
+        if ($user->role ==='employee'){
+            return redirect ()->route('employee.dashboard');
         }elseif ($user->role === 'user'){
-            return redirect ()->route(user.dashboard);
+            return redirect ()->route('user.dashboard');
         }
 
         // return redirect(RouteServiceProvider::HOME);
-        return redirect()->route('dashboard');
+        return redirect()->route('home');
     }
 }

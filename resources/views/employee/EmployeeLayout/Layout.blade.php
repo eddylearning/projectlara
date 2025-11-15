@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Employee - @yield('title')</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
     body {
       display: flex;
@@ -39,11 +41,6 @@
       padding: 1rem 0;
       border-bottom: 1px solid #374151;
     }
-    .main-content {
-      margin-left: 250px;
-      flex: 1;
-      padding: 2rem;
-    }
     .navbar {
       position: fixed;
       top: 0;
@@ -57,22 +54,45 @@
     .content-wrapper {
       margin-top: 60px;
     }
+    .main-content {
+      margin-left: 250px;
+      flex: 1;
+      padding: 2rem;
+    }
   </style>
 </head>
+
 <body>
 
   {{-- Sidebar --}}
   <div class="sidebar">
     <h4>Employee Panel</h4>
-    <a href="{{ route('employee.dashboard') }}" class="{{ request()->is('employee/dashboard*') ? 'active' : '' }}">🏠 Dashboard</a>
-    <a href="#" class="{{ request()->is('employee/bookings*') ? 'active' : '' }}">📄 Manage Bookings</a>
-    <a href="#" class="{{ request()->is('employee/cars*') ? 'active' : '' }}">🚗 Cars</a>
-    <a href="#" class="{{ request()->is('employee/reports*') ? 'active' : '' }}">📊 Reports</a>
-    <a href="#" class="{{ request()->is('employee/settings*') ? 'active' : '' }}">⚙️ Settings</a>
+
+    <a href="{{ route('employee.dashboard') }}" class="{{ request()->is('employee/dashboard*') ? 'active' : '' }}">
+      🏠 Dashboard
+    </a>
+
+    <a href="{{ route('employee.bookings.index') }}" class="{{ request()->is('employee/booking*') ? 'active' : '' }}">
+      📄 Manage Bookings
+    </a>
+
+    <a href="#" class="{{ request()->is('employee/cars*') ? 'active' : '' }}">
+      🚗 Cars
+    </a>
+
+    <a href="#" class="{{ request()->is('employee/reports*') ? 'active' : '' }}">
+      📊 Reports
+    </a>
+
+    <a href="#" class="{{ request()->is('employee/settings*') ? 'active' : '' }}">
+      ⚙️ Settings
+    </a>
 
     <a href="{{ route('logout') }}" 
-       onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-       class="mt-auto">🚪 Logout</a>
+       onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+       class="mt-auto">
+       🚪 Logout
+    </a>
 
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
       @csrf
@@ -85,4 +105,12 @@
   </div>
 
   {{-- Main Content --}}
-  <div class="main-conten
+  <div class="main-content">
+    <div class="content-wrapper">
+      @yield('content')
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

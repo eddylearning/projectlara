@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Employee;
 
-use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class EmployeeDashboardController extends Controller
 {
+    /**
+     * Display the employee dashboard.
+     */
     public function index()
     {
         $totalBookings = Booking::count();
@@ -15,7 +19,10 @@ class EmployeeDashboardController extends Controller
         $recentBookings = Booking::latest()->take(5)->get();
 
         return view('employee.EmployeeDashboard', compact(
-            'totalBookings', 'activeTrips', 'completedTrips', 'recentBookings'
+            'totalBookings',
+            'activeTrips',
+            'completedTrips',
+            'recentBookings'
         ));
     }
 }
