@@ -31,9 +31,9 @@ use App\Http\Controllers\Employee\EmployeeDashboardController;
 //     return view('welcome');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -58,10 +58,10 @@ Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 // Route::prefix('admin')->name('admin.')->group(function () {
 //     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
 // });
-Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
     // Admin dashboard
-    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     // Admin car CRUD routes
     Route::resource('cars', AdminCarController::class);
@@ -71,8 +71,8 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
 
 });
 
-Route::middleware(['auth', 'is_employee'])->prefix('employee')->name('employee.')->group(function () {
-    Route::get('/', [EmployeeDashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth', 'employee'])->prefix('employee')->name('employee.')->group(function () {
+    Route::get('/dashboard', [EmployeeDashboardController::class, 'index'])->name('dashboard');
 
     // Employee bookings CRUD routes
     Route::resource('bookings', EmployeeBookingController::class);
@@ -82,8 +82,8 @@ Route::middleware(['auth', 'is_employee'])->prefix('employee')->name('employee.'
 
 });
 
-Route::middleware(['auth', 'is_user'])->prefix('user')->name('user.')->group(function () {
-    Route::get('/', [UserDashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(function () {
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
  // user car CRUD routes
     Route::resource('cars', UserCarController::class);
     Route::resource('booking',UserBookingController::class);
@@ -94,3 +94,43 @@ Route::middleware(['auth', 'is_user'])->prefix('user')->name('user.')->group(fun
     Route::get('bookings/{booking}', [UserBookingController::class, 'show'])->name('bookings.show');
 
 });
+
+// debug to check the actula user loged in
+Route::get('/debug-role', function () {
+    $user = auth()->user();
+    if ($user) {
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'role' => $user->role
+        ]);
+    } else {
+        return response('No user is logged in', 401);
+    }
+});
+
+// used to check if a single user has access to more than one dashboard
+Route::get('/test-roles', function () {
+    $user = auth()->user();
+    if (!$user) return 'Not logged in';
+
+    $check = function ($middleware) {
+        try {
+            $middlewareInstance = app($middleware);
+            $middlewareInstance->handle(request(), fn () => 'allowed');
+            return true; // middleware passed
+        } catch (\Throwable $e) {
+            return false; // middleware blocked or threw 403
+        }
+    };
+
+    return [
+        'id' => $user->id,
+        'name' => $user->name,
+        'role' => $user->role,
+        'can_access_user_dashboard' => $check(\App\Http\Middleware\UserMiddleware::class),
+        'can_access_employee_dashboard' => $check(\App\Http\Middleware\EmployeeMiddleware::class),
+        'can_access_admin_dashboard' => $check(\App\Http\Middleware\AdminMiddleware::class),
+    ];
+});
+

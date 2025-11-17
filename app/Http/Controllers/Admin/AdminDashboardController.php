@@ -18,7 +18,7 @@ class AdminDashboardController extends Controller
 
         $recentCars = Car::latest()->take(5)->get();
 
-        return view('admin.adminDashboard', compact(
+        return view('admin.AdminDashboard', compact(
             'totalCars',
             'totalUsers',
             'totalReports',
