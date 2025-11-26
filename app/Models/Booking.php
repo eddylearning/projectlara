@@ -41,4 +41,21 @@ class Booking extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    //for payment calc
+    public function payment()
+{
+    return $this->hasOne(Payment::class);
+}
+
+public function calculateDays()
+{
+    return now()->parse($this->start_date)->diffInDays($this->end_date);
+}
+
+public function calculateTotalAmount()
+{
+    return $this->calculateDays() * $this->car->price; // car price per day
+}
+
 }

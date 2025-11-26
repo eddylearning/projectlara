@@ -66,7 +66,7 @@
 
   {{-- Sidebar --}}
   <div class="sidebar">
-    <h4>Employee Panel</h4>
+    <h4> Panel</h4>
 
     <a href="{{ route('employee.dashboard') }}" class="{{ request()->is('employee/dashboard*') ? 'active' : '' }}">
       🏠 Dashboard

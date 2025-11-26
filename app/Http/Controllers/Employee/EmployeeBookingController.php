@@ -3,72 +3,56 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
+use App\Models\Car;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class EmployeeBookingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-          $bookings = Booking::with(['user', 'car'])->latest()->get();
-        return view('bookings.index', compact('bookings'));
+        $bookings = Booking::with(['user', 'car'])->latest()->get();
+
+        return view('employee.bookings.index', compact('bookings'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $users = User::where('role', 'user')->get();
+        $cars = Car::where('available', true)->get();
+
+        return view('employee.bookings.create', compact('users', 'cars'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-
-    
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-          return view('bookings.show', compact('booking'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
         $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'car_id'  => 'required|exists:cars,id',
+            'start_date' => 'required|date|after:today',
+            'end_date'   => 'required|date|after:start_date',
+        ]);
+
+        $booking = Booking::create($validated + [
+            'status' => 'pending'
+        ]);
+
+        // Make car unavailable
+        Car::where('id', $request->car_id)->update(['available' => false]);
+
+        // Redirect to payment
+        return redirect()->route('payment.checkout', $booking->id);
+    }
+
+    public function update(Request $request, Booking $booking)
+    {
+        $request->validate([
             'status' => 'required|in:pending,approved,completed,cancelled',
         ]);
 
-        $booking->update(['status' => $validated['status']]);
+        $booking->update(['status' => $request->status]);
 
-        return back()->with('success', 'Booking status updated successfully.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return back()->with('success', 'Booking status updated.');
     }
 }

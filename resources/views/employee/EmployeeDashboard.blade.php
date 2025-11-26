@@ -1,6 +1,6 @@
-@extends('employee.EmployeeLayout.Layout')
+@extends('employee.EmployeeLayout.layout')
 
-@section('title', 'Employee Dashboard')
+@section('title', 'Employee Dash')
 
 @section('content')
 <div class="container-fluid">

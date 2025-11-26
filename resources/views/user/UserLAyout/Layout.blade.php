@@ -67,8 +67,10 @@
     <a href="{{ route('user.dashboard') }}" class="{{ request()->is('user/dashboard*') ? 'active' : '' }}">🏠 Dashboard</a>
     {{-- <a href="{{ route('user.cars')}}" class="{{ request()->is('user/cars*') ? 'active' : '' }}">🚗 My Cars</a> --}}
         {{-- <a href="{{ route('admin.cars.index') }}" class="{{ request()->is('admin/cars*') ? 'active' : '' }}">🚗 MyCars</a> --}}
-
-    <a href="{{ route('user.bookings.index')}}" class="{{ request()->is('user/bookings*') ? 'active' : '' }}">📄 Bookings</a>
+    
+    <a href="{{ route('user.bookings.index') }}" class="btn btn-primary">View My Bookings</a>
+    
+    {{-- <a href="{{ route('user.bookings.index')}}" class="{{ request()->is('user/bookings*') ? 'active' : '' }}">📄 Bookings</a> --}}
     {{-- <a href="{{ route('user.settings')}}" class="{{ request()->is('user/settings*') ? 'active' : '' }}">⚙️ Settings</a> --}}
     <a href="{{ route('logout') }}" 
        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"

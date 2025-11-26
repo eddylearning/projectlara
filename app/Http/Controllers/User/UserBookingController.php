@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class UserBookingController extends Controller
 {
     /**
-     * Show all bookings belonging to the logged-in user.
+     * List all bookings for the logged-in user.
      */
     public function index()
     {
@@ -24,7 +24,7 @@ class UserBookingController extends Controller
     }
 
     /**
-     * Show a form to create a new booking.
+     * Show booking form.
      */
     public function create()
     {
@@ -33,7 +33,7 @@ class UserBookingController extends Controller
     }
 
     /**
-     * Store a new booking in the database.
+     * Store the booking – NO phone number here.
      */
     public function store(Request $request)
     {
@@ -48,34 +48,36 @@ class UserBookingController extends Controller
             'car_id' => $validated['car_id'],
             'start_date' => $validated['start_date'],
             'end_date' => $validated['end_date'],
-            'status' => Booking::STATUS_PENDING, // or 'pending' if constants not used
+            'status' => Booking::STATUS_PENDING,
+            'payment_status' => 'pending',
         ]);
 
-         // Mark car as unavailable
-        $car = Car::find($validated['car_id']);
-        $car->update(['available' => false]);
+        // Mark car unavailable
+        Car::find($validated['car_id'])->update(['available' => false]);
 
-        return redirect()->route('booking.index')
-                         ->with('success', 'Booking created successfully.');
+        // Redirect user to payment page
+        return redirect()->route('payment.checkout', $booking->id);
+    }
+
+       public function show(Booking $booking)
+    {
+        $this->authorize('view', $booking);
+
+        return view('bookings.show', compact('booking'));
     }
 
     /**
-     * Cancel an existing booking.
+     * Cancel booking
      */
     public function destroy(Booking $booking)
     {
-        // Ensure the user owns this booking
         if ($booking->user_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');
         }
 
-        //CANLING THE BOOKING
-        // Update status instead of deleting (soft cancel)
         $booking->update(['status' => Booking::STATUS_CANCELLED]);
-
-        // Mark the car available again
         $booking->car->update(['available' => true]);
-        
+
         return back()->with('success', 'Booking cancelled successfully.');
     }
 }

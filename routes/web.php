@@ -69,31 +69,61 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Admin report CRUD routes
     Route::resource('reports', AdminReportController::class);
 
+    
+        // ADMIN booking routes
+        Route::prefix('bookings')->name('bookings.')->group(function () {
+            Route::get('/', [AdminBookingController::class, 'index'])->name('index');
+            Route::get('/{booking}', [AdminBookingController::class, 'show'])->name('show');
+
+            // admin status update shortcuts
+            Route::get('/{booking}/approve', [AdminBookingController::class, 'approve'])->name('approve');
+            Route::get('/{booking}/complete', [AdminBookingController::class, 'complete'])->name('complete');
+            Route::get('/{booking}/cancel', [AdminBookingController::class, 'cancel'])->name('cancel');
+        });
+
+
 });
 
 Route::middleware(['auth', 'employee'])->prefix('employee')->name('employee.')->group(function () {
     Route::get('/dashboard', [EmployeeDashboardController::class, 'index'])->name('dashboard');
 
-    // Employee bookings CRUD routes
-    Route::resource('bookings', EmployeeBookingController::class);
-
     // Employee cars CRUD routes
     Route::resource('cars', EmployeeCarController::class);
 
+       // Employee bookings CRUD routes
+  Route::prefix('bookings')->name('bookings.')->group(function () {
+            Route::get('/', [EmployeeBookingController::class, 'index'])->name('index');
+            Route::get('/create', [EmployeeBookingController::class, 'create'])->name('create');
+            Route::post('/', [EmployeeBookingController::class, 'store'])->name('store');
+            Route::get('/{booking}', [EmployeeBookingController::class, 'show'])->name('show');
+            Route::patch('/{booking}', [EmployeeBookingController::class, 'update'])->name('update');
+            Route::delete('/{booking}', [EmployeeBookingController::class, 'destroy'])->name('destroy');
+        });
 });
 
 Route::middleware(['auth', 'user'])->prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
  // user car CRUD routes
     Route::resource('cars', UserCarController::class);
-    Route::resource('booking',UserBookingController::class);
-    Route::get('bookings', [UserBookingController::class, 'index'])->name('bookings.index');
-    Route::get('bookings/create', [UserBookingController::class, 'create'])->name('bookings.create');
-    Route::post('bookings', [UserBookingController::class, 'store'])->name('bookings.store');
-    Route::delete('bookings/{booking}', [UserBookingController::class, 'destroy'])->name('bookings.destroy');
-    Route::get('bookings/{booking}', [UserBookingController::class, 'show'])->name('bookings.show');
-
+    //booking CRUD routes
+      Route::prefix('bookings')->name('bookings.')->group(function () {
+            Route::get('/', [UserBookingController::class, 'index'])->name('index');
+            Route::get('/create', [UserBookingController::class, 'create'])->name('create');
+            Route::post('/', [UserBookingController::class, 'store'])->name('store');
+            Route::get('/{booking}', [UserBookingController::class, 'show'])->name('show');
+            Route::delete('/{booking}', [UserBookingController::class, 'destroy'])->name('destroy');
+        });
 });
+
+//payment and checkout routes
+Route::get('/payment/checkout/{booking}', [PaymentController::class, 'checkout'])
+    ->middleware(['auth'])
+    ->name('payment.checkout');
+
+Route::post('/payment/process', [PaymentController::class, 'process'])
+    ->middleware(['auth'])
+    ->name('payment.process');
+
 
 // debug to check the actula user loged in
 Route::get('/debug-role', function () {

@@ -30,7 +30,8 @@ class AdminCarController extends Controller
 
         Car::create($validated);
 
-        return redirect()->route('admin.cars.index')->with('success', 'Car added successfully!');
+        return redirect()->route('admin.cars.index')
+        ->with('success', 'Car added successfully!');
     }
 
     public function edit(Car $car)
@@ -49,12 +50,14 @@ class AdminCarController extends Controller
 
         $car->update($validated);
 
-        return redirect()->route('admin.cars.index')->with('success', 'Car updated successfully!');
+        return redirect()->route('admin.cars.index')
+        ->with('success', 'Car updated successfully!');
     }
 
     public function destroy(Car $car)
     {
         $car->delete();
-        return redirect()->route('admin.cars.index')->with('success', 'Car deleted successfully!');
+        return redirect()->route('admin.cars.index')
+        ->with('success', 'Car deleted successfully!');
     }
 }
