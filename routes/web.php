@@ -9,10 +9,15 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\User\UserCarController;
 use App\Http\Controllers\Admin\AdminCarController;
+use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Admin\PaymentLogController;
 use App\Http\Controllers\User\UserBookingController;
 use App\Http\Controllers\Admin\AdminReportController;
+use App\Http\Controllers\Auth\RoleRedirectController;
+use App\Http\Controllers\Admin\AdminBookingController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Employee\EmployeeBookingController;
 use App\Http\Controllers\Employee\EmployeeDashboardController;
 
@@ -45,11 +50,15 @@ require __DIR__.'/auth.php';
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cars', [CarController::class, 'index'])->name('cars');
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 //added code below so that form submition can be definded//
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
+Route::get('/redirect/dashboard', RoleRedirectController::class)
+    ->middleware(['auth'])->name('redirect.dashboard');
+
+
 
            //admin routes
 // Route::prefix('admin')->name('admin.')->group(function (){
@@ -68,9 +77,24 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Admin report CRUD routes
     Route::resource('reports', AdminReportController::class);
+      // Payment logs routes
+    Route::prefix('payment-logs')->group(function () {
+        Route::get('/', [PaymentLogController::class, 'index'])->name('payments.logs'); // admin.payments.logs
+        Route::get('/{id}', [PaymentLogController::class, 'show'])->name('payments.logs.show'); // admin.payments.logs.show
+        Route::get('/export/pdf', [PaymentLogController::class, 'exportPdf'])->name('payments.logs.pdf'); // admin.payments.logs.pdf
+    });
+
+    // Export routes
+    Route::get('/bookings/export/pdf', [AdminBookingController::class, 'exportPdf'])->name('admin.bookings.export.pdf');
+
+//admin contact message
+   Route::prefix('messages')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\MessageController::class, 'index'])->name('messages.index');
+        Route::get('/{id}', [\App\Http\Controllers\Admin\MessageController::class, 'show'])->name('messages.show');
+    });
 
     
-        // ADMIN booking routes
+  // ADMIN booking routes
         Route::prefix('bookings')->name('bookings.')->group(function () {
             Route::get('/', [AdminBookingController::class, 'index'])->name('index');
             Route::get('/{booking}', [AdminBookingController::class, 'show'])->name('show');
@@ -80,6 +104,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
             Route::get('/{booking}/complete', [AdminBookingController::class, 'complete'])->name('complete');
             Route::get('/{booking}/cancel', [AdminBookingController::class, 'cancel'])->name('cancel');
         });
+        
+        //payment mangament
+    Route::get('/payments', [AdminPaymentController::class, 'index'])->name('index');
 
 
 });
@@ -123,6 +150,30 @@ Route::get('/payment/checkout/{booking}', [PaymentController::class, 'checkout']
 Route::post('/payment/process', [PaymentController::class, 'process'])
     ->middleware(['auth'])
     ->name('payment.process');
+
+Route::post('/mpesa/callback', [PaymentController::class, 'callback'])
+    ->name('mpesa.callback');   // no auth - Safaricom needs access    
+
+Route::get('/payment/success/{booking}', [PaymentController::class, 'success'])
+    ->name('payment.success');
+
+Route::get('/payment/failed/{booking}', [PaymentController::class, 'failed'])
+    ->name('payment.failed');
+
+Route::get('/payment/status/{booking}', [PaymentController::class, 'status'])
+    ->name('payment.status');
+
+Route::get('/my-payments', function() {
+    $payments = \App\Models\Payment::with('booking.car')
+                ->whereHas('booking', function($q) {
+                    $q->where('user_id', auth()->id());
+                })
+                ->latest()
+                ->get();
+
+    return view('payments.history', compact('payments'));
+})->name('payments.history')->middleware('auth');
+
 
 
 // debug to check the actula user loged in

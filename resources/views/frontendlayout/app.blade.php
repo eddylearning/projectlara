@@ -116,6 +116,7 @@
     }
 
     .search-bar {
+      margin-bottom: 40px;
       display: flex;
       justify-content: center;
       gap: 0.5rem;
@@ -256,12 +257,76 @@
       background: #e64a19;
     }
         
-       /*pagination for cars*/
-    /* .pagination {
-     display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    } */
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.pagination li a,
+.pagination li span {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.pagination li a:hover {
+  background: #ff5722;
+}
+
+/*booking btn*/
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #ff5722;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #e64a19;
+}
+
+.btn.disabled,
+.btn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+  color: #fff;
+  opacity: 0.7;
+}
+
+
+/* Status Badge */
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 4px;
+  color: #fff;
+  text-transform: uppercase;
+  z-index: 10;
+}
+
+.badge.booked {
+  background-color: #e74c3c; /* red for sold */
+}
+
+.badge.available {
+  background-color: #27ae60; /* green for available */
+}
+
 
 
     /* ===== Footer ===== */
@@ -277,6 +342,64 @@
       color: #ff5722;
     }
 
+    /* Dropdown container */
+.nav-links li.dropdown {
+    position: relative;
+}
+
+/* Dropdown toggle link */
+.nav-links li.dropdown .dropbtn {
+    cursor: pointer;
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+/* Dropdown content (hidden by default) */
+.nav-links li.dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #1a1a1a;
+    min-width: 150px;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+/* Dropdown items */
+.nav-links li.dropdown .dropdown-content li {
+    width: 100%;
+}
+
+.nav-links li.dropdown .dropdown-content a,
+.nav-links li.dropdown .dropdown-content button {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.nav-links li.dropdown .dropdown-content a:hover,
+.nav-links li.dropdown .dropdown-content button:hover {
+    background-color: #ff5722;
+    color: #fff;
+}
+
+/* Show dropdown on hover */
+.nav-links li.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+   
+
     /* ===== Responsive ===== */
     @media (max-width: 768px) {
       .nav-links {
@@ -289,6 +412,15 @@
         flex-direction: column;
         align-items: center;
       }
+
+         .car-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .car-card {
+        width: 90%;
+    }
 
       .hero h2 {
         font-size: 2rem;

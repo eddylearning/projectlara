@@ -12,10 +12,19 @@ class Payment extends Model
         'status',
         'method',
         'transaction_id',
+        'phone',
+        'mpesa_receipt',
+        'raw_response',
     ];
 
     public function booking()
     {
         return $this->belongsTo(Booking::class);
     }
+
+    public function logs()
+{
+    return $this->hasMany(PaymentLog::class);
+}
+
 }

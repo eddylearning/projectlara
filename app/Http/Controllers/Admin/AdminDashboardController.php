@@ -15,6 +15,7 @@ class AdminDashboardController extends Controller
         $totalCars = Car::count();
         $totalUsers = User::count();
         $totalReports = 0; // Placeholder — if you add a Report model later
+        $messageCount = ContactMessage::count();
 
         $recentCars = Car::latest()->take(5)->get();
 
@@ -22,7 +23,9 @@ class AdminDashboardController extends Controller
             'totalCars',
             'totalUsers',
             'totalReports',
-            'recentCars'
+            'recentCars',
+            'messageCount'
+            
         ));
     }
 }

@@ -20,7 +20,6 @@
         </thead>
         <tbody>
             @forelse($bookings as $booking)
-                {{-- @include('bookings._partials._bookingrow') --}}
                 @include('bookings.bookingrow')
 
             @empty

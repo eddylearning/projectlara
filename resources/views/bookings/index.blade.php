@@ -21,7 +21,7 @@
     <tbody>
       @foreach($bookings as $booking)
      @forelse($bookings as $booking)
-    @include('bookings._partials._booking_row', ['booking' => $booking])
+            @include('bookings.bookingrow')
 @empty
 <tr>
     <td colspan="7" class="text-center text-muted">No bookings found.</td>

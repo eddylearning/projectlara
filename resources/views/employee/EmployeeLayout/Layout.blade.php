@@ -68,6 +68,9 @@
   <div class="sidebar">
     <h4> Panel</h4>
 
+    <a href="{{ url('/') }}">🌍 Go to Website</a>
+
+
     <a href="{{ route('employee.dashboard') }}" class="{{ request()->is('employee/dashboard*') ? 'active' : '' }}">
       🏠 Dashboard
     </a>

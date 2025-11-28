@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CarApiController;
+use App\Http\Controllers\Payment\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth','admin'])->group(function(){
 Route::apiResource('car', CarApiController::class);
 });
+
+//mpesa
+Route::post('/mpesa/callback', [PaymentController::class, 'callback'])
+    ->name('mpesa.callback');

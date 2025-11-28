@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Booking extends Model
 {
@@ -50,12 +51,17 @@ class Booking extends Model
 
 public function calculateDays()
 {
-    return now()->parse($this->start_date)->diffInDays($this->end_date);
+    $start = Carbon::parse($this->start_date);
+    $end = Carbon::parse($this->end_date);
+
+    $days = $start->diffInDays($end);
+
+    return max(1, $days); // at least 1 day
 }
 
 public function calculateTotalAmount()
 {
-    return $this->calculateDays() * $this->car->price; // car price per day
+    return $this->calculateDays() * ($this->car->price_per_day ?? 0);
 }
 
 }

@@ -18,13 +18,14 @@
         </tr>
         </thead>
         <tbody>
-        @forelse($bookings as $booking)
-            @include('bookings._partials._booking_row')
-        @empty
-            <tr>
-                <td colspan="6" class="text-center">No bookings found</td>
-            </tr>
-        @endforelse
+      @forelse($bookings as $booking)
+    @include('admin.bookings.partials._booking_row')
+@empty
+    <tr>
+        <td colspan="6" class="text-center">No bookings found</td>
+    </tr>
+@endforelse
+
         </tbody>
     </table>
 </div>
